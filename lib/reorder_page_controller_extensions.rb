@@ -1,4 +1,4 @@
-module PageControllerExtensions
+module ReorderPageControllerExtensions
   def reorder
     if request.post?
       sort_order = params[:sort_order].to_s.split(',').map { |i| Integer(i) rescue nil }.compact

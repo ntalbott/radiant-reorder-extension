@@ -1,4 +1,4 @@
-module PageExtensions
+module ReorderPageExtensions
   def included(page_base)
     page_base.send(:before_create, :update_position)
     page_base.class_eval <<-'end;'

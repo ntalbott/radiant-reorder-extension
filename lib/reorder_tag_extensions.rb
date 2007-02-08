@@ -1,4 +1,4 @@
-module TagExtensions
+module ReorderTagExtensions
   include Radiant::Taggable
   
   desc %{
