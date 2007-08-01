@@ -21,7 +21,7 @@
 </table>
 <script type="text/javascript">
 // <![CDATA[
-  new SiteMap('site-map');
+  new SiteMap('site-map', <%= expanded_rows.to_json %>);
 // ]]>
 </script>
 <form action="<%= clear_cache_url %>" method="post">
