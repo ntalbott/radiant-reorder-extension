@@ -17,7 +17,7 @@ namespace :radiant do
         task :public => :environment do
           root = File.expand_path(ReorderExtension.root)
           sources = Dir.glob(File.join(root, 'public', '*'))
-          radiant_root = File.expand_path(RADIANT_ROOT)
+          radiant_root = File.expand_path(RAILS_ROOT)
           destination = File.join(radiant_root, 'public')
           cp_r sources, destination
         end
