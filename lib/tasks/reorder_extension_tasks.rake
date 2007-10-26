@@ -15,11 +15,14 @@ namespace :radiant do
       namespace :update do
         desc "Copies the public assets of the Reorder extension into the instance's public directory"
         task :public => :environment do
-          root = File.expand_path(ReorderExtension.root)
-          sources = Dir.glob(File.join(root, 'public', '*'))
-          radiant_root = File.expand_path(RAILS_ROOT)
-          destination = File.join(radiant_root, 'public')
-          cp_r sources, destination
+          is_svn_or_dir = proc {|path| path =~ /\.svn/ || File.directory?(path) }
+          Dir[ReorderExtension.root + "/public/**/*"].reject(&is_svn_or_dir).each do |file|
+            path = file.sub(ReorderExtension.root, '')
+            directory = File.dirname(path)
+            puts "Copying #{path}..."
+            mkdir_p RAILS_ROOT + directory
+            cp file, RAILS_ROOT + path
+          end
         end
       end
       
