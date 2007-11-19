@@ -1,4 +1,5 @@
-# Load the environment
+require 'test/unit'
+# # Load the environment
 unless defined? RADIANT_ROOT
   ENV["RAILS_ENV"] = "test"
   require "#{File.expand_path(File.dirname(__FILE__) + "/../../../../")}/config/environment"

@@ -1,33 +1,30 @@
-class ReorderExtension < Radiant::Extension
-  version "1.0"
-  description "Adds the ability to reorder the children of a page."
-  url "http://dev.radiantcms.org/svn/radiant/branches/mental/extensions/reorder"
+# Uncomment this if you reference any of your controllers in activate
+# require_dependency 'application'
 
+class ReorderExtension < Radiant::Extension
+  version "0.1"
+  description "Allows (re)ordering of pages in the page tree."
+  url "http://code.digitalpulp.com"
+  
   define_routes do |map|
-    map.page_reorder_children  'admin/pages/reorder/:id', :controller => 'admin/page', :action => 'reorder'
+    map.with_options :controller => "admin/page" do |page|
+      page.page_move_lower "admin/pages/:id/move_lower", :action => "move_lower"
+      page.page_move_higher "admin/pages/:id/move_higher", :action => "move_higher"
+      page.page_move_to_bottom "admin/pages/:id/move_to_bottom", :action => "move_to_bottom"
+      page.page_move_to_top "admin/pages/:id/move_to_top", :action => "move_to_top"
+    end
   end
   
   def activate
-    Page.send :include, ReorderPageExtensions, ReorderTagExtensions
-    Page.reflections[:children].options[:order] = "position ASC"
-    
-    StandardTags.class_eval do
-      unless method_defined?(:children_find_options_with_position)
-        def children_find_options_with_position(tag)
-          default_options = children_find_options_without_position(tag)
-          default_options[:order].sub! /published_at/, 'position' if tag.attr.symbolize_keys[:by].nil?
-          default_options
-        end
-        alias_method_chain :children_find_options, :position
-      end
-    end
-    
-    require_dependency 'application'
-    Admin::PageController.send :include, ReorderPageControllerExtensions
-    Admin::PageController.send :helper, ReorderPageHelperExtensions
+    admin.page.index.add :sitemap_head, "order_header"
+    admin.page.index.add :node, "order"
+    Page.send :include, Reorder::PageExtensions
+    Admin::PageController.send :include, Reorder::PageControllerExtensions
+    Admin::PageController.send :helper, Reorder::PageHelper
+    StandardTags.send :include, Reorder::TagExtensions
   end
   
   def deactivate
   end
-    
+  
 end

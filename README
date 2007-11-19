@@ -1,9 +1,28 @@
 = Reorder
 
-Modifies Radiant's page administration tool in such a way as to provide the ability to reorder
-the children of a Page. Be sure to run 'rake db:migrate:extensions', then
-'rake radiant:extensions:reorder:update:public'.
+Created by Sean Cribbs, October 2007.  Inspired by Adam Williams' original
+reorder extension.
 
-This extension is based on the work done by John Long in preparation for the feature to be a part
-of Radiant 0.6.1. In the interest of making it available as soon as possible, it has been packaged
-here for all the world to see.
+Allows pages to be arbitrarily ordered underneath their parent.  This is useful
+for creating navigations based on children of a given page.  Buttons are added
+to the sitemap that allow you to move individual pages higher or lower in the 
+ordering, or to the top or bottom of the list.
+
+No drag-and-drop for now!  Keeping it simple.
+
+Included images are slightly modified from FamFamFam Silk Icons by Mark James:
+http://www.famfamfam.com/lab/icons/silk/
+
+== Installation
+
+1) Unpack/checkout/export the extension into vendor/extensions of your project.
+
+2) Run the extension migrations.
+
+  $ rake production db:migrate:extensions
+
+3) Run the extension update task.
+
+  $ rake radiant:extensions:reorder:update
+  
+4) Restart your server
