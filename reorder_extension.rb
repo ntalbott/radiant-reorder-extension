@@ -4,7 +4,7 @@
 class ReorderExtension < Radiant::Extension
   version "0.1"
   description "Allows (re)ordering of pages in the page tree."
-  url "http://code.digitalpulp.com"
+  url "http://dev.radiantcms.org/"
   
   define_routes do |map|
     map.with_options :controller => "admin/page" do |page|
